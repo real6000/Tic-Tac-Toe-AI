@@ -1,9 +1,28 @@
 #main.py
 
+from board import Board
+from ai import get_best_move
+
+def get_human_move(board):
+    while True:
+        try:
+            move = input("Enter your move (row and column 1-3, e.g. '2 3'): ")
+            row, col = map(int, move.strip().split())
+            if row in [1,2,3] and col in [1,2,3]:
+                if board.is_empty(row-1, col-1):
+                    board.make_move(row-1, col-1, "X")
+                    break
+                else:
+                    print("That spot is taken. Try again.")
+            else:
+                print("Invalid input. Use numbers from 1 to 3.")
+        except ValueError:
+            print("Invalid format. Enter row and column separated by space.")
+
 def main():
+    print("Tic Tac Toe! You are X. AI is O.")
     while True:
         board = Board()
-        print("Tic Tac Toe! You are X. AI is O.")
         board.display()
 
         while True:
