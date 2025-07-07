@@ -38,3 +38,17 @@ class Board:
 
     def get_available_moves(self):
         return [(i, j) for i in range(3) for j in range(3) if self.grid[i][j] == " "]
+    
+    def check_winner(self):
+        lines = self.grid + list(zip(*self.grid))  # rows and columns
+        lines.append([self.grid[i][i] for i in range(3)])  # main diagonal
+        lines.append([self.grid[i][2 - i] for i in range(3)])  # anti-diagonal
+        for line in lines:
+            if all(cell == "X" for cell in line):
+                return "X"
+            if all(cell == "O" for cell in line):
+                return "O"
+        return None
+
+    def undo_move(self, row, col):
+        self.grid[row][col] = " "
